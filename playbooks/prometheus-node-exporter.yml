@@ -1,0 +1,11 @@
+---
+# This playbook
+
+- hosts:
+   - deb_ct
+   - deb_vm
+  tasks:
+   - name: Update APT and install haveged
+     apt: 
+        name: prometheus-node-exporter
+        update_cache: yes

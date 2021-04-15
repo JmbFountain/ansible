@@ -1,0 +1,9 @@
+---
+# This playbook
+
+- hosts:
+   - deb_ct
+   - deb_vm
+  tasks:
+   - name: Print Terminal
+     shell: echo $TERM

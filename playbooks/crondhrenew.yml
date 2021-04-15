@@ -1,0 +1,13 @@
+---
+# install crontab to automatically renew dhcp lease
+
+- hosts:
+   - deb_ct
+   - deb_vm
+  tasks:
+   - name: "Add job that renews the dhcp lease"
+     ansible.builtin.cron:
+        name: "renew dhcp lease"
+        minute: "0"
+        hour: "1"
+        job: "systemctl restart networking"

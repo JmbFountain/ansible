@@ -1,0 +1,20 @@
+---
+# This playbooks updates apt repo and cache
+
+- hosts:
+   - deb_ct
+   - deb_vm
+  tasks:
+   - name: Update apt repo and cache
+     apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+   
+   - name: Upgrade all packages 
+     apt: upgrade=yes
+
+   - name: clean up cache
+     apt:
+        autoclean: yes
+    
+   - name: remove unneeded packages
+     apt: 
+        autoremove: yes

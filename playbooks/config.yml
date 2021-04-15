@@ -1,0 +1,31 @@
+---
+# This playbook copies standard config files to machines
+
+- hosts:
+   - deb_ct
+   - deb_vm
+  tasks:
+   - name: deploy bashrc for root
+     copy: src=/srv/srvcfg/profile dest=/root/.bashrc
+
+   - name: deploy bash_aliases for root
+     copy: src=/srv/srvcfg/bash_aliases dest=/root/.bash_aliases
+
+   - name: deploy default apt sources
+     copy: src=/srv/srvcfg/sources.list dest=/etc/apt/sources.list
+
+   - name: deploy sshd config
+     copy: src=/srv/srvcfg/sshd_conf dest=/etc/ssh/
+
+   - name: deploy motd
+     copy: src=/srv/srvcfg/motd dest=/etc/update-motd.d/motd
+
+   - name: Check if there is still a motd in the default location
+     stat:
+      path: /etc/motd
+     register: old_motd
+
+   - name: Rename default Motd so it won't be displayed anymore
+     command: mv /etc/motd /etc/motd-
+     when: old_motd.stat.exists
+
